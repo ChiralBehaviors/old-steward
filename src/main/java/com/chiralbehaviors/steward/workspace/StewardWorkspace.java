@@ -15,7 +15,9 @@
  */
 package com.chiralbehaviors.steward.workspace;
 
-import com.chiralbehaviors.CoRE.product.Product;
+import com.chiralbehaviors.CoRE.agency.Agency;
+import com.chiralbehaviors.CoRE.attribute.Attribute;
+import com.chiralbehaviors.CoRE.time.Interval;
 
 /**
  * @author hparry
@@ -23,7 +25,11 @@ import com.chiralbehaviors.CoRE.product.Product;
  */
 public interface StewardWorkspace {
     
-    Product getGoal();
+    Interval getGoal();
+    
+    Attribute getIsComplete();
+    
+    Agency getSteward();
     
     
 }

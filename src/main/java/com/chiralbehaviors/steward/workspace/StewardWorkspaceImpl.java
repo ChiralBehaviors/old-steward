@@ -15,7 +15,10 @@
  */
 package com.chiralbehaviors.steward.workspace;
 
+import com.chiralbehaviors.CoRE.agency.Agency;
+import com.chiralbehaviors.CoRE.attribute.Attribute;
 import com.chiralbehaviors.CoRE.product.Product;
+import com.chiralbehaviors.CoRE.time.Interval;
 
 /**
  * @author hparry
@@ -25,11 +28,29 @@ public class StewardWorkspaceImpl implements StewardWorkspace {
 
     private Product goal;
 
+
     /* (non-Javadoc)
      * @see com.chiralbehaviors.steward.workspace.StewardWorkspace#getGoal()
      */
-    public Product getGoal() {
-        return this.goal;
+    public Interval getGoal() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /* (non-Javadoc)
+     * @see com.chiralbehaviors.steward.workspace.StewardWorkspace#getIsComplete()
+     */
+    public Attribute getIsComplete() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /* (non-Javadoc)
+     * @see com.chiralbehaviors.steward.workspace.StewardWorkspace#getSteward()
+     */
+    public Agency getSteward() {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

@@ -19,7 +19,7 @@ import org.junit.Test;
 
 import com.chiralbehaviors.CoRE.kernel.Kernel;
 import com.chiralbehaviors.CoRE.meta.Model;
-import com.chiralbehaviors.CoRE.product.Product;
+import com.chiralbehaviors.CoRE.time.Interval;
 /**
  * @author hparry
  *
@@ -32,8 +32,8 @@ public class DraftingTest {
         Kernel kernel = null;
         Model model = null;
         StewardWorkspace ws = new StewardWorkspaceImpl();
-        Product eatMoreChikn = new Product("EatMoreChikn", "...and less beef", kernel.getCore());
-        model.getProductModel().link(eatMoreChikn, kernel.getIsA(), ws.getGoal(), kernel.getCore());
+        Interval eatMoreChikn = new Interval("EatMoreChikn", "...and less beef", kernel.getCore());
+        model.getIntervalModel().link(eatMoreChikn, kernel.getIsA(), ws.getGoal(), kernel.getCore());
         
     }
 
