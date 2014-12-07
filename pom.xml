@@ -1,8 +1,47 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.chiralbehaviors</groupId>
-  <artifactId>steward</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>Steward</name>
-  <description>A goal tracking app</description>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.chiralbehaviors</groupId>
+    <artifactId>steward</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>Steward</name>
+    <description>A goal tracking app</description>
+
+    <properties>
+        <us.version>0.0.2-rc5</us.version>
+        <db.login>core</db.login>
+        <db.password>password</db.password>
+        <db.server>localhost</db.server>
+        <db.port>5432</db.port>
+        <db.database>core</db.database>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>chiralbehaviors-snapshots</id>
+            <url>http://repository-chiralbehaviors.forge.cloudbees.com/snapshot/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.chiralbehaviors.CoRE</groupId>
+            <artifactId>animations</artifactId>
+            <version>${us.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>1.9.5</version>
+        </dependency>
+    </dependencies>
 </project>
