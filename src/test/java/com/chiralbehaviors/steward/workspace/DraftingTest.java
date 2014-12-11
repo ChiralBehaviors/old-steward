@@ -15,7 +15,7 @@
  */
 package com.chiralbehaviors.steward.workspace;
 
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -60,6 +60,12 @@ public class DraftingTest extends AbstractModelTest {
         em.getTransaction().commit();
 
         assertFalse(eatMoreChikn.isComplete());
+        
+        em.getTransaction().begin();
+        eatMoreChikn.setIsComplete(true);
+        em.getTransaction().commit();
+        
+        assertTrue(eatMoreChikn.isComplete());
 
     }
 

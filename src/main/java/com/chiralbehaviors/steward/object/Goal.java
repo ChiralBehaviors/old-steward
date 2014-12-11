@@ -68,5 +68,9 @@ public class Goal {
     public boolean isComplete() {
         return facet.getValue(workspace.getIsComplete()).getBooleanValue();
     }
+    
+    public void setIsComplete(boolean complete) {
+        facet.getValue(workspace.getIsComplete()).setBooleanValue(complete);
+    }
 
 }
