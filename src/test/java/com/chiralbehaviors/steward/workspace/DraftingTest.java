@@ -15,26 +15,52 @@
  */
 package com.chiralbehaviors.steward.workspace;
 
+import static org.junit.Assert.assertFalse;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import java.util.Date;
+
+import org.junit.Before;
 import org.junit.Test;
 
-import com.chiralbehaviors.CoRE.kernel.Kernel;
-import com.chiralbehaviors.CoRE.meta.Model;
-import com.chiralbehaviors.CoRE.time.Interval;
+import com.chiralbehaviors.CoRE.attribute.unit.Unit;
+import com.chiralbehaviors.CoRE.meta.models.AbstractModelTest;
+import com.chiralbehaviors.steward.object.Goal;
+import com.chiralbehaviors.ultrastructure.calendar.workspace.CalendarWorkspace;
+
 /**
  * @author hparry
  *
  */
-public class DraftingTest {
-   
-    @SuppressWarnings("null")
+public class DraftingTest extends AbstractModelTest {
+    private StewardWorkspaceBootstrap ws;
+    CalendarWorkspace                 calWs;
+
+    @Before
+    public void init() {
+        calWs = mock(CalendarWorkspace.class);
+        Unit millisSinceEpoch = new Unit("MillisSinceEpoch", null,
+                                         kernel.getCore());
+        em.getTransaction().begin();
+        em.persist(millisSinceEpoch);
+        em.getTransaction().commit();
+        when(calWs.getMillisSinceEpoch()).thenReturn(millisSinceEpoch);
+        ws = new StewardWorkspaceBootstrap(calWs, em, kernel);
+        em.getTransaction().begin();
+        ws.manifestWorkspace();
+        em.getTransaction().commit();
+    }
+
     @Test
     public void testImaginedGoal() {
-        Kernel kernel = null;
-        Model model = null;
-        StewardWorkspace ws = new StewardWorkspaceImpl();
-        Interval eatMoreChikn = new Interval("EatMoreChikn", "...and less beef", kernel.getCore());
-        model.getIntervalModel().link(eatMoreChikn, kernel.getIsA(), ws.getGoal(), kernel.getCore());
-        
+        em.getTransaction().begin();
+        Goal eatMoreChikn = new Goal("EatMoreChikn", "...and less beef",
+                                     new Date(), ws, model);
+        em.getTransaction().commit();
+
+        assertFalse(eatMoreChikn.isComplete());
+
     }
 
 }

@@ -18,6 +18,7 @@ package com.chiralbehaviors.steward.workspace;
 import com.chiralbehaviors.CoRE.agency.Agency;
 import com.chiralbehaviors.CoRE.attribute.Attribute;
 import com.chiralbehaviors.CoRE.time.Interval;
+import com.chiralbehaviors.ultrastructure.calendar.workspace.CalendarWorkspace;
 
 /**
  * @author hparry
@@ -30,6 +31,11 @@ public interface StewardWorkspace {
     Attribute getIsComplete();
     
     Agency getSteward();
+
+    /**
+     * @return
+     */
+    CalendarWorkspace getCalendarWorkspace();
     
     
 }

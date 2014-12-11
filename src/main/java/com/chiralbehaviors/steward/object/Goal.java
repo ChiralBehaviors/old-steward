@@ -15,9 +15,14 @@
  */
 package com.chiralbehaviors.steward.object;
 
+import java.math.BigDecimal;
+import java.util.Date;
+
 import com.chiralbehaviors.CoRE.meta.Model;
 import com.chiralbehaviors.CoRE.network.Aspect;
+import com.chiralbehaviors.CoRE.network.Facet;
 import com.chiralbehaviors.CoRE.time.Interval;
+import com.chiralbehaviors.CoRE.time.IntervalAttribute;
 import com.chiralbehaviors.steward.workspace.StewardWorkspace;
 
 /**
@@ -26,26 +31,42 @@ import com.chiralbehaviors.steward.workspace.StewardWorkspace;
  */
 public class Goal {
 
-    private Interval interval;
-    private Model model;
-    private StewardWorkspace workspace;
+    private Interval                           interval;
+    @SuppressWarnings("unused")
+    private Model                              model;
+    private StewardWorkspace                   workspace;
+    private Aspect<Interval>                   isAGoal;
+    private Facet<Interval, IntervalAttribute> facet;
 
     public Goal(Interval interval, StewardWorkspace workspace, Model model) {
         this.interval = interval;
         this.model = model;
         this.workspace = workspace;
-        model.getIntervalModel().authorize(new Aspect<Interval>(
-                                                                model.getKernel().getIsA(),
-                                                                workspace.getGoal()),
-                                           workspace.getIsComplete());
+        isAGoal = new Aspect<Interval>(model.getKernel().getIsA(),
+                                       workspace.getGoal());
+        facet = model.getIntervalModel().create("Goal", "The goal interval",
+                                                isAGoal);
+    }
+
+    public Goal(String name, String description, Date dueDate,
+                StewardWorkspace workspace, Model model) {
+        this(
+             new Interval(
+                          name,
+                          BigDecimal.valueOf(dueDate.getTime()),
+                          workspace.getCalendarWorkspace().getMillisSinceEpoch(),
+                          BigDecimal.valueOf(0),
+                          model.getKernel().getNotApplicableUnit(),
+                          description, workspace.getSteward()), workspace,
+             model);
     }
 
     public Interval getInterval() {
         return interval;
     }
-    
-    public boolean getIsComplete() {
-        ???????????
+
+    public boolean isComplete() {
+        return facet.getValue(workspace.getIsComplete()).getBooleanValue();
     }
 
 }
