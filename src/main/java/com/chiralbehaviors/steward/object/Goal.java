@@ -16,7 +16,7 @@
 package com.chiralbehaviors.steward.object;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.Instant;
 
 import com.chiralbehaviors.CoRE.meta.Model;
 import com.chiralbehaviors.CoRE.network.Aspect;
@@ -48,17 +48,18 @@ public class Goal {
                                                 isAGoal);
     }
 
-    public Goal(String name, String description, Date dueDate,
+    public Goal(String name, String description, Instant dueDate,
                 StewardWorkspace workspace, Model model) {
         this(
              new Interval(
                           name,
-                          BigDecimal.valueOf(dueDate.getTime()),
+                          BigDecimal.valueOf(Instant.now().toEpochMilli()),
                           workspace.getCalendarWorkspace().getMillisSinceEpoch(),
                           BigDecimal.valueOf(0),
                           model.getKernel().getNotApplicableUnit(),
                           description, workspace.getSteward()), workspace,
              model);
+        setDueDate(dueDate);
     }
 
     public Interval getInterval() {
@@ -68,9 +69,25 @@ public class Goal {
     public boolean isComplete() {
         return facet.getValue(workspace.getIsComplete()).getBooleanValue();
     }
-    
+
     public void setIsComplete(boolean complete) {
         facet.getValue(workspace.getIsComplete()).setBooleanValue(complete);
+    }
+
+    public Instant getStartDate() {
+        Instant date = Instant.ofEpochMilli(interval.getStart().longValue());
+        return date;
+    }
+
+    public Instant getDueDate() {
+        return Instant.ofEpochMilli(facet.getValue(workspace.getDueDate()).getNumericValue().longValue());
+    }
+
+    public void setDueDate(Instant date) {
+        facet.getValue(workspace.getDueDate()).setNumericValue(BigDecimal.valueOf(date.toEpochMilli()));
+        long duration = date.toEpochMilli() - interval.getStart().longValue();
+        interval.setDuration(BigDecimal.valueOf(duration));
+        interval.setDurationUnit(workspace.getCalendarWorkspace().getMilliseconds());
     }
 
 }

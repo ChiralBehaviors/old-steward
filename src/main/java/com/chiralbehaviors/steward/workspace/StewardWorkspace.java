@@ -25,17 +25,15 @@ import com.chiralbehaviors.ultrastructure.calendar.workspace.CalendarWorkspace;
  *
  */
 public interface StewardWorkspace {
-    
+
     Interval getGoal();
-    
+
     Attribute getIsComplete();
-    
+
+    Attribute getDueDate();
+
     Agency getSteward();
 
-    /**
-     * @return
-     */
     CalendarWorkspace getCalendarWorkspace();
-    
-    
+
 }

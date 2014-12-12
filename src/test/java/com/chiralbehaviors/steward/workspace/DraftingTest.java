@@ -15,13 +15,15 @@
  */
 package com.chiralbehaviors.steward.workspace;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.util.Date;
+import java.time.Instant;
 
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.chiralbehaviors.CoRE.attribute.unit.Unit;
@@ -34,11 +36,11 @@ import com.chiralbehaviors.ultrastructure.calendar.workspace.CalendarWorkspace;
  *
  */
 public class DraftingTest extends AbstractModelTest {
-    private StewardWorkspaceBootstrap ws;
-    CalendarWorkspace                 calWs;
+    private static StewardWorkspaceBootstrap ws;
+    private static CalendarWorkspace                 calWs;
 
-    @Before
-    public void init() {
+    @BeforeClass
+    public static void init() {
         calWs = mock(CalendarWorkspace.class);
         Unit millisSinceEpoch = new Unit("MillisSinceEpoch", null,
                                          kernel.getCore());
@@ -56,16 +58,36 @@ public class DraftingTest extends AbstractModelTest {
     public void testImaginedGoal() {
         em.getTransaction().begin();
         Goal eatMoreChikn = new Goal("EatMoreChikn", "...and less beef",
-                                     new Date(), ws, model);
+                                     Instant.now(), ws, model);
         em.getTransaction().commit();
 
         assertFalse(eatMoreChikn.isComplete());
-        
+
         em.getTransaction().begin();
         eatMoreChikn.setIsComplete(true);
         em.getTransaction().commit();
-        
+
         assertTrue(eatMoreChikn.isComplete());
+
+    }
+
+    @Test
+    public void testStartDate() {
+        em.getTransaction().begin();
+        Instant now = Instant.now();
+        Goal surviveThisMeeting = new Goal("Survive this meeting",
+                                           "christ it will never end", now, ws,
+                                           model);
+        em.getTransaction().commit();
+
+        em.getTransaction().begin();
+        Instant later = Instant.ofEpochMilli(now.getEpochSecond() + 20);
+        surviveThisMeeting.setDueDate(later);
+        em.getTransaction().commit();
+
+        assertEquals(later.toEpochMilli(),
+                     surviveThisMeeting.getInterval().getStart().longValue()
+                             + surviveThisMeeting.getInterval().getDuration().longValue());
 
     }
 

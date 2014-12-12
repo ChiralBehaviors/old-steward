@@ -28,6 +28,7 @@ public class ReadOnlyStewardWorkspace implements StewardWorkspace {
 
     protected Interval goal;
     protected Attribute isComplete;
+    protected Attribute dueDate;
     protected Agency steward;
     protected CalendarWorkspace calendarWorkspace;
 
@@ -58,6 +59,13 @@ public class ReadOnlyStewardWorkspace implements StewardWorkspace {
      */
     public CalendarWorkspace getCalendarWorkspace() {
         return calendarWorkspace;
+    }
+
+    /* (non-Javadoc)
+     * @see com.chiralbehaviors.steward.workspace.StewardWorkspace#getDueDate()
+     */
+    public Attribute getDueDate() {
+        return dueDate;
     }
 
 }

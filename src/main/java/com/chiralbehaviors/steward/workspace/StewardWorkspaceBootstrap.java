@@ -62,6 +62,9 @@ public class StewardWorkspaceBootstrap extends ReadOnlyStewardWorkspace {
                                                                 kernel.getIsA(),
                                                                 goal),
                                            isComplete);
+        model.getIntervalModel().authorize(new Aspect<Interval>(
+                                                                kernel.getIsA(),
+                                                                goal), dueDate);
 
     }
 
@@ -73,6 +76,10 @@ public class StewardWorkspaceBootstrap extends ReadOnlyStewardWorkspace {
                                    steward);
         isComplete.setValueType(ValueType.BOOLEAN);
         em.persist(isComplete);
+
+        dueDate = new Attribute("Due Date", "The due date attribute", steward);
+        dueDate.setValueType(ValueType.NUMERIC);
+        em.persist(dueDate);
 
     }
 
