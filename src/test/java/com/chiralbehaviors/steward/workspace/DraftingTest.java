@@ -18,40 +18,33 @@ package com.chiralbehaviors.steward.workspace;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 import java.time.Instant;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.chiralbehaviors.CoRE.attribute.unit.Unit;
 import com.chiralbehaviors.CoRE.meta.models.AbstractModelTest;
 import com.chiralbehaviors.steward.object.Goal;
-import com.chiralbehaviors.ultrastructure.calendar.workspace.CalendarWorkspace;
+import com.chiralbehaviors.ultrastructure.calendar.workspace.CalendarWorkspaceBootstrap;
 
 /**
  * @author hparry
  *
  */
 public class DraftingTest extends AbstractModelTest {
-    private static StewardWorkspaceBootstrap ws;
-    private static CalendarWorkspace                 calWs;
+    private static StewardWorkspaceBootstrap  ws;
+    private static CalendarWorkspaceBootstrap calWs;
 
     @BeforeClass
     public static void init() {
-        calWs = mock(CalendarWorkspace.class);
-        Unit millisSinceEpoch = new Unit("MillisSinceEpoch", null,
-                                         kernel.getCore());
         em.getTransaction().begin();
-        em.persist(millisSinceEpoch);
-        em.getTransaction().commit();
-        when(calWs.getMillisSinceEpoch()).thenReturn(millisSinceEpoch);
+        calWs = new CalendarWorkspaceBootstrap(model);
+        calWs.createWorkspace();
         ws = new StewardWorkspaceBootstrap(calWs, em, kernel);
-        em.getTransaction().begin();
-        ws.manifestWorkspace();
+        ws.createWorkspace();
         em.getTransaction().commit();
+
     }
 
     @Test

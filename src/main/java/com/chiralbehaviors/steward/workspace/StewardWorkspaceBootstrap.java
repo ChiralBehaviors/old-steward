@@ -45,7 +45,7 @@ public class StewardWorkspaceBootstrap extends ReadOnlyStewardWorkspace {
         this.kernel = kernel;
     }
 
-    public void manifestWorkspace() {
+    public void createWorkspace() {
         //agencies first. I create the Steward agency
         //and it creates all the rest of the objects
         loadAgencies();
@@ -96,9 +96,8 @@ public class StewardWorkspaceBootstrap extends ReadOnlyStewardWorkspace {
      * 
      */
     private void loadIntervals() {
-        goal = new Interval("Goal", "The Goal Supertype", steward);
-        goal.setStartUnit(kernel.getNotApplicableUnit());
-        goal.setDurationUnit(kernel.getNotApplicableUnit());
+        goal = model.getIntervalModel().newDefaultInterval("Goal",
+                                                           "The Goal Supertype");
         em.persist(goal);
 
     }
