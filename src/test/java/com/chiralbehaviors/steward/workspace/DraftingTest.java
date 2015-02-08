@@ -25,7 +25,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.chiralbehaviors.CoRE.meta.models.AbstractModelTest;
-import com.chiralbehaviors.steward.object.Goal;
+import com.chiralbehaviors.steward.object.Step;
 import com.chiralbehaviors.ultrastructure.calendar.workspace.CalendarWorkspaceBootstrap;
 
 /**
@@ -50,7 +50,7 @@ public class DraftingTest extends AbstractModelTest {
     @Test
     public void testImaginedGoal() {
         em.getTransaction().begin();
-        Goal eatMoreChikn = new Goal("EatMoreChikn", "...and less beef",
+        Step eatMoreChikn = new Step("EatMoreChikn", "...and less beef",
                                      Instant.now(), ws, model);
         em.getTransaction().commit();
 
@@ -68,7 +68,7 @@ public class DraftingTest extends AbstractModelTest {
     public void testStartDate() {
         em.getTransaction().begin();
         Instant now = Instant.now();
-        Goal surviveThisMeeting = new Goal("Survive this meeting",
+        Step surviveThisMeeting = new Step("Survive this meeting",
                                            "christ it will never end", now, ws,
                                            model);
         em.getTransaction().commit();

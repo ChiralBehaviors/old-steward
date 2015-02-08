@@ -51,7 +51,19 @@ public class StewardWorkspaceBootstrap extends ReadOnlyStewardWorkspace {
         loadAgencies();
         loadIntervals();
         loadAttributes();
+        loadRelationships();
         authorizeAttributes();
+    }
+
+
+    private void loadRelationships() {
+
+        inJourney = model.getRelationshipModel().create("InJourney",
+                                                        "A is part of the journey B",
+                                                        "HasStep",
+                                                        "B has step A");
+        hasStep = inJourney.getInverse();
+
     }
 
     /**
@@ -60,11 +72,11 @@ public class StewardWorkspaceBootstrap extends ReadOnlyStewardWorkspace {
     private void authorizeAttributes() {
         model.getIntervalModel().authorize(new Aspect<Interval>(
                                                                 kernel.getIsA(),
-                                                                goal),
+                                                                step),
                                            isComplete);
         model.getIntervalModel().authorize(new Aspect<Interval>(
                                                                 kernel.getIsA(),
-                                                                goal), dueDate);
+                                                                step), dueDate);
 
     }
 
@@ -96,9 +108,13 @@ public class StewardWorkspaceBootstrap extends ReadOnlyStewardWorkspace {
      * 
      */
     private void loadIntervals() {
-        goal = model.getIntervalModel().newDefaultInterval("Goal",
-                                                           "The Goal Supertype");
-        em.persist(goal);
+        step = model.getIntervalModel().newDefaultInterval("Step",
+                                                           "The Step Supertype");
+        em.persist(step);
+
+        journey = model.getIntervalModel().newDefaultInterval("Journey",
+                                                              "The Journey Supertype");
+        em.persist(journey);
 
     }
 

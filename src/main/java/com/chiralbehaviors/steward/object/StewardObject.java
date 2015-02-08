@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014 Chiral Behaviors, LLC, all rights reserved.
+ * Copyright (c) 2015 Chiral Behaviors, LLC, all rights reserved.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,34 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.chiralbehaviors.steward.workspace;
+package com.chiralbehaviors.steward.object;
 
-import com.chiralbehaviors.CoRE.agency.Agency;
-import com.chiralbehaviors.CoRE.attribute.Attribute;
-import com.chiralbehaviors.CoRE.network.Relationship;
+import java.time.Instant;
+
+import com.chiralbehaviors.CoRE.meta.Model;
 import com.chiralbehaviors.CoRE.time.Interval;
-import com.chiralbehaviors.ultrastructure.calendar.workspace.CalendarWorkspace;
+import com.chiralbehaviors.steward.workspace.StewardWorkspace;
 
 /**
  * @author hparry
  *
  */
-public interface StewardWorkspace {
+public abstract class StewardObject {
 
-    Interval getStep();
+    protected Interval interval;
+    protected Model model;
+    protected StewardWorkspace workspace;
 
-    Interval getJourney();
+    public Interval getInterval() {
+        return interval;
+    }
+
+    public Instant getStartDate() {
+        Instant date = Instant.ofEpochMilli(interval.getStart().longValue());
+        return date;
+    }
     
-    Attribute getIsComplete();
-
-    Attribute getDueDate();
-
-    Agency getSteward();
-
-    CalendarWorkspace getCalendarWorkspace();
-    
-    Relationship getInJourney();
-    
-    Relationship getHasStep();
 
 }

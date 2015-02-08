@@ -17,6 +17,7 @@ package com.chiralbehaviors.steward.workspace;
 
 import com.chiralbehaviors.CoRE.agency.Agency;
 import com.chiralbehaviors.CoRE.attribute.Attribute;
+import com.chiralbehaviors.CoRE.network.Relationship;
 import com.chiralbehaviors.CoRE.time.Interval;
 import com.chiralbehaviors.ultrastructure.calendar.workspace.CalendarWorkspace;
 
@@ -26,18 +27,21 @@ import com.chiralbehaviors.ultrastructure.calendar.workspace.CalendarWorkspace;
  */
 public class ReadOnlyStewardWorkspace implements StewardWorkspace {
 
-    protected Interval goal;
+    protected Interval step;
+    protected Interval journey;
     protected Attribute isComplete;
     protected Attribute dueDate;
     protected Agency steward;
     protected CalendarWorkspace calendarWorkspace;
+    protected Relationship inJourney;
+    protected Relationship hasStep;
 
 
     /* (non-Javadoc)
      * @see com.chiralbehaviors.steward.workspace.StewardWorkspace#getGoal()
      */
-    public Interval getGoal() {
-        return goal;
+    public Interval getStep() {
+        return step;
     }
 
     /* (non-Javadoc)
@@ -66,6 +70,31 @@ public class ReadOnlyStewardWorkspace implements StewardWorkspace {
      */
     public Attribute getDueDate() {
         return dueDate;
+    }
+
+    /* (non-Javadoc)
+     * @see com.chiralbehaviors.steward.workspace.StewardWorkspace#getJourney()
+     */
+    @Override
+    public Interval getJourney() {
+        return journey;
+    }
+
+    /* (non-Javadoc)
+     * @see com.chiralbehaviors.steward.workspace.StewardWorkspace#getInJourney()
+     */
+    @Override
+    public Relationship getInJourney() {
+        return inJourney;
+    }
+
+
+    /* (non-Javadoc)
+     * @see com.chiralbehaviors.steward.workspace.StewardWorkspace#getHasStep()
+     */
+    @Override
+    public Relationship getHasStep() {
+        return hasStep;
     }
 
 }
