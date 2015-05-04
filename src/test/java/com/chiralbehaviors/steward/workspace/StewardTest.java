@@ -15,10 +15,22 @@
  */
 package com.chiralbehaviors.steward.workspace;
 
+import static org.junit.Assert.assertEquals;
+
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.BaseErrorListener;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.RecognitionException;
+import org.antlr.v4.runtime.Recognizer;
+import org.junit.Before;
 import org.junit.Test;
 
 import com.chiralbehaviors.CoRE.meta.models.AbstractModelTest;
-import static org.junit.Assert.*;
+import com.chiralbehaviors.CoRE.workspace.dsl.WorkspaceImporter;
+import com.chiralbehaviors.CoRE.workspace.dsl.WorkspaceLexer;
+import com.chiralbehaviors.CoRE.workspace.dsl.WorkspaceParser;
+import com.chiralbehaviors.CoRE.workspace.dsl.WorkspaceParser.WorkspaceContext;
+import com.chiralbehaviors.CoRE.workspace.dsl.WorkspacePresentation;
 
 /**
  * @author hparry
@@ -26,9 +38,35 @@ import static org.junit.Assert.*;
  */
 public class StewardTest extends AbstractModelTest {
 
+    @Before
+    public void before() throws Exception {
+        WorkspaceLexer l = new WorkspaceLexer(
+                                              new ANTLRInputStream(
+                                                                   getClass().getResourceAsStream("/steward-workspace.wsp")));
+        WorkspaceParser p = new WorkspaceParser(new CommonTokenStream(l));
+        p.addErrorListener(new BaseErrorListener() {
+            @Override
+            public void syntaxError(Recognizer<?, ?> recognizer,
+                                    Object offendingSymbol, int line,
+                                    int charPositionInLine, String msg,
+                                    RecognitionException e) {
+                throw new IllegalStateException("failed to parse at line "
+                                                + line + " due to " + msg, e);
+            }
+        });
+        WorkspaceContext ctx = p.workspace();
+
+        WorkspaceImporter importer = new WorkspaceImporter(
+                                                           new WorkspacePresentation(
+                                                                                     ctx),
+                                                           model);
+        em.getTransaction().begin();
+        importer.loadWorkspace();
+        em.flush();
+    }
+
     @Test
     public void testJourneys() throws InstantiationException {
-        em.getTransaction().begin();
         Journey journey = (Journey) model.construct(Journey.class,
                                                     "my journey", "test",
                                                     kernel.getCore());

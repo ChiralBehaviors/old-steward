@@ -17,6 +17,8 @@ package com.chiralbehaviors.steward.workspace;
 
 import java.util.List;
 
+import com.chiralbehaviors.CoRE.Ruleform;
+import com.chiralbehaviors.CoRE.meta.Model;
 import com.chiralbehaviors.CoRE.phantasm.ScopedPhantasm;
 import com.chiralbehaviors.CoRE.time.Interval;
 import com.chiralbehaviors.annotations.Edge;
@@ -36,4 +38,11 @@ public interface Journey extends ScopedPhantasm<Interval>{
 
     @Edge(@Key(namespace = "kernel", name = "HasMember"))
     void addStep(Step step);
+    
+    default Journey scopedAccess() {
+        Ruleform lookup = getScope().lookup("kernel", "IsA");
+        System.out.println("lookup" + lookup);
+        Model model = getModel();
+        return (Journey) model.wrap(Journey.class, getRuleform());
+    }
 }

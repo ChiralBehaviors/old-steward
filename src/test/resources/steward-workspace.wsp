@@ -2,6 +2,9 @@ workspace: "uri:http://ultrastructure.me/ontology/com.chiralbehaviors/demo/stewa
            "Steward"
            "Task Manager"
 
+imports {
+    "urn:uuid:00000000-0000-0004-0000-000000000003" as kernel
+}
 
 intervals {
     journey = "Journey" "A journey";
