@@ -33,7 +33,7 @@ import com.chiralbehaviors.CoRE.workspace.dsl.WorkspaceParser;
 public class WorkspaceParserTest {
     
     @Test
-    public void testExampleWorkspace() throws Exception {
+    public void testParse() throws Exception {
         WorkspaceLexer l = new WorkspaceLexer(
                                               new ANTLRInputStream(
                                                                    getClass().getResourceAsStream("/steward-workspace.wsp")));
