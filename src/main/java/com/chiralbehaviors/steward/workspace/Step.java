@@ -26,7 +26,7 @@ import com.chiralbehaviors.annotations.State;
  * @author hparry
  *
  */
-@State(facets = { @Facet(classification = @Key(namespace = "kernel", name = "IsA"), classifier = @Key(name = "Step")) }, workspace = "uri:http://ultrastructure.me/ontology/com.chiralbehaviors/demo/steward-workspace/v1")
+@State(facets = { @Facet(classification = @Key(namespace = "kernel", name = "IsA"), classifier = @Key(name = "step")) }, workspace = "uri:http://ultrastructure.me/ontology/com.chiralbehaviors/demo/steward-workspace/v1")
 public interface Step extends ScopedPhantasm<Interval>{
     
     @Edge(@Key(namespace = "kernel", name = "MemberOf"))
