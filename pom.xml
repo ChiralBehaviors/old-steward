@@ -8,7 +8,7 @@
     <description>A goal tracking app</description>
 
     <properties>
-        <us.version>1.0.1-SNAPSHOT</us.version>
+        <us.version>2.0.0-SNAPSHOT</us.version>
         <postgresql.driver.version>9.1-901.jdbc4</postgresql.driver.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <core.java.login>core_java</core.java.login>
@@ -45,6 +45,11 @@
             <version>${us.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.chiralbehaviors.CoRE</groupId>
+            <artifactId>dsl</artifactId>
+            <version>${us.version}</version>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.11</version>
@@ -53,11 +58,6 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
             <version>1.9.5</version>
-        </dependency>
-        <dependency>
-            <groupId>com.chiralbehaviors</groupId>
-            <artifactId>ultrastructure-calendaring</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
@@ -73,6 +73,16 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-core</artifactId>
             <version>1.1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.xtend</groupId>
+            <artifactId>org.eclipse.xtend.lib</artifactId>
+            <version>2.8.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr4-runtime</artifactId>
+            <version>4.5</version>
         </dependency>
     </dependencies>
 
@@ -92,6 +102,35 @@
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>add-resource</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${project.build.directory}/target/generated-sources/antlr4</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.antlr</groupId>
+                <artifactId>antlr4-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>antlr4</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

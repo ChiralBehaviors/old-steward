@@ -1,0 +1,9 @@
+workspace: "uri:http://ultrastructure.me/ontology/com.chiralbehaviors/demo/steward-workspace/v1" 
+           "Steward"
+           "Task Manager"
+
+
+intervals {
+    journey = "Journey" "A journey";
+    step = "Step" "A step";
+}
