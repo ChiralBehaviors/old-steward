@@ -17,19 +17,18 @@ package com.chiralbehaviors.steward.workspace;
 
 import java.util.List;
 
+import com.chiralbehaviors.CoRE.annotations.Edge;
+import com.chiralbehaviors.CoRE.annotations.Key;
+import com.chiralbehaviors.CoRE.annotations.State;
 import com.chiralbehaviors.CoRE.phantasm.ScopedPhantasm;
 import com.chiralbehaviors.CoRE.time.Interval;
-import com.chiralbehaviors.annotations.Edge;
-import com.chiralbehaviors.annotations.Facet;
-import com.chiralbehaviors.annotations.Key;
-import com.chiralbehaviors.annotations.State;
 
 /**
  * @author hparry
  *
  */
-@State(facets = { @Facet(classification = @Key(namespace = "kernel", name = "IsA"), classifier = @Key(name = "journey")) }, workspace = "uri:http://ultrastructure.me/ontology/com.chiralbehaviors/demo/steward-workspace/v1")
-public interface Journey extends ScopedPhantasm<Interval>{
+@State(workspace = "uri:http://ultrastructure.me/ontology/com.chiralbehaviors/demo/steward-workspace/v1")
+public interface Journey extends ScopedPhantasm<Interval> {
 
     @Edge(@Key(namespace = "kernel", name = "HasMember"))
     List<Step> getSteps();

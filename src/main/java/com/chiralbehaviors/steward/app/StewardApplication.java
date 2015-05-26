@@ -13,25 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.chiralbehaviors.steward.workspace;
+package com.chiralbehaviors.steward.app;
 
-import com.chiralbehaviors.CoRE.annotations.Edge;
-import com.chiralbehaviors.CoRE.annotations.Key;
-import com.chiralbehaviors.CoRE.annotations.State;
-import com.chiralbehaviors.CoRE.phantasm.ScopedPhantasm;
-import com.chiralbehaviors.CoRE.time.Interval;
+import io.dropwizard.Application;
+import io.dropwizard.setup.Environment;
 
 /**
  * @author hparry
  *
  */
-@State(workspace = "uri:http://ultrastructure.me/ontology/com.chiralbehaviors/demo/steward-workspace/v1")
-public interface Step extends ScopedPhantasm<Interval> {
+public class StewardApplication extends Application<StewardConfiguration>{
 
-    @Edge(@Key(namespace = "kernel", name = "MemberOf"))
-    Journey getJourney();
-
-    @Edge(@Key(namespace = "kernel", name = "MemberOf"))
-    void setJourney(Journey journey);
+    /* (non-Javadoc)
+     * @see io.dropwizard.Application#run(io.dropwizard.Configuration, io.dropwizard.setup.Environment)
+     */
+    @Override
+    public void run(StewardConfiguration configuration, Environment environment)
+                                                                                throws Exception {
+        // TODO Auto-generated method stub
+        
+    }
 
 }

@@ -13,25 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.chiralbehaviors.steward.workspace;
+package com.chiralbehaviors.steward.app;
 
-import com.chiralbehaviors.CoRE.annotations.Edge;
-import com.chiralbehaviors.CoRE.annotations.Key;
-import com.chiralbehaviors.CoRE.annotations.State;
-import com.chiralbehaviors.CoRE.phantasm.ScopedPhantasm;
-import com.chiralbehaviors.CoRE.time.Interval;
+import io.dropwizard.Configuration;
 
 /**
  * @author hparry
  *
  */
-@State(workspace = "uri:http://ultrastructure.me/ontology/com.chiralbehaviors/demo/steward-workspace/v1")
-public interface Step extends ScopedPhantasm<Interval> {
-
-    @Edge(@Key(namespace = "kernel", name = "MemberOf"))
-    Journey getJourney();
-
-    @Edge(@Key(namespace = "kernel", name = "MemberOf"))
-    void setJourney(Journey journey);
+public class StewardConfiguration extends Configuration {
 
 }
