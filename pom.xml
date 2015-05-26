@@ -18,7 +18,7 @@
 
         <testing.db.database>postgres</testing.db.database>
         <testing.db.server>127.0.0.1</testing.db.server>
-        <testing.db.port>5432</testing.db.port>
+        <testing.db.port>5433</testing.db.port>
         <testing.db.login>postgres</testing.db.login>
         <testing.db.password>postgres</testing.db.password>
 

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.chiralbehaviors.steward.timer;
+package com.chiralbehaviors.steward.ui;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -26,6 +26,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+
+import com.chiralbehaviors.steward.timer.CountdownTimer;
 
 /**
  * @author hparry
