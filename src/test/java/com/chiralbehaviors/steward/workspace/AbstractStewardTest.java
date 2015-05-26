@@ -15,30 +15,23 @@
  */
 package com.chiralbehaviors.steward.workspace;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.BeforeClass;
 
-import org.junit.Test;
+import com.chiralbehaviors.CoRE.meta.models.AbstractModelTest;
+import com.chiralbehaviors.CoRE.workspace.dsl.WorkspaceImporter;
 
 /**
  * @author hparry
  *
  */
-public class StewardTest extends AbstractStewardTest {
+public abstract class AbstractStewardTest extends AbstractModelTest {
 
-    
-
-    @Test
-    public void testJourneys() throws InstantiationException {
-        Journey journey = (Journey) model.construct(Journey.class,
-                                                    "my journey", "test");
-
-        journey.addStep((Step) model.construct(Step.class, "my first step",
-                                               "my first step"));
+    @BeforeClass
+    public static void before() throws Exception {
+        em.getTransaction().begin();
+        WorkspaceImporter.createWorkspace(AbstractStewardTest.class.getResourceAsStream("/steward-workspace.wsp"),
+                                          model);
         em.flush();
-
-        assertEquals(1, journey.getSteps().size());
-        em.getTransaction().rollback();
-
     }
 
 }

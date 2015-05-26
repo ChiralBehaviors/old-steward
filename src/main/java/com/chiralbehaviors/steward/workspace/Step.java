@@ -15,21 +15,23 @@
  */
 package com.chiralbehaviors.steward.workspace;
 
+import com.chiralbehaviors.CoRE.annotations.Edge;
+import com.chiralbehaviors.CoRE.annotations.Key;
+import com.chiralbehaviors.CoRE.annotations.State;
 import com.chiralbehaviors.CoRE.phantasm.ScopedPhantasm;
 import com.chiralbehaviors.CoRE.time.Interval;
-import com.chiralbehaviors.annotations.Edge;
-import com.chiralbehaviors.annotations.Facet;
-import com.chiralbehaviors.annotations.Key;
-import com.chiralbehaviors.annotations.State;
 
 /**
  * @author hparry
  *
  */
-@State(facets = { @Facet(classification = @Key(namespace = "kernel", name = "IsA"), classifier = @Key(name = "step")) }, workspace = "uri:http://ultrastructure.me/ontology/com.chiralbehaviors/demo/steward-workspace/v1")
-public interface Step extends ScopedPhantasm<Interval>{
-    
+@State(workspace = "uri:http://ultrastructure.me/ontology/com.chiralbehaviors/demo/steward-workspace/v1")
+public interface Step extends ScopedPhantasm<Interval> {
+
     @Edge(@Key(namespace = "kernel", name = "MemberOf"))
     Journey getJourney();
+
+    @Edge(@Key(namespace = "kernel", name = "MemberOf"))
+    void setJourney(Journey journey);
 
 }

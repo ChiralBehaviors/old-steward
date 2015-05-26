@@ -13,32 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.chiralbehaviors.steward.workspace;
+package com.chiralbehaviors.steward.app;
 
-import static org.junit.Assert.assertEquals;
-
-import org.junit.Test;
+import io.dropwizard.Application;
+import io.dropwizard.setup.Environment;
 
 /**
  * @author hparry
  *
  */
-public class StewardTest extends AbstractStewardTest {
+public class StewardApplication extends Application<StewardConfiguration>{
 
-    
-
-    @Test
-    public void testJourneys() throws InstantiationException {
-        Journey journey = (Journey) model.construct(Journey.class,
-                                                    "my journey", "test");
-
-        journey.addStep((Step) model.construct(Step.class, "my first step",
-                                               "my first step"));
-        em.flush();
-
-        assertEquals(1, journey.getSteps().size());
-        em.getTransaction().rollback();
-
+    /* (non-Javadoc)
+     * @see io.dropwizard.Application#run(io.dropwizard.Configuration, io.dropwizard.setup.Environment)
+     */
+    @Override
+    public void run(StewardConfiguration configuration, Environment environment)
+                                                                                throws Exception {
+        // TODO Auto-generated method stub
+        
     }
 
 }

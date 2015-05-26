@@ -13,32 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.chiralbehaviors.steward.workspace;
-
-import static org.junit.Assert.assertEquals;
-
-import org.junit.Test;
+package com.chiralbehaviors.steward.timer;
 
 /**
  * @author hparry
  *
  */
-public class StewardTest extends AbstractStewardTest {
-
+public interface CompletionAction {
     
-
-    @Test
-    public void testJourneys() throws InstantiationException {
-        Journey journey = (Journey) model.construct(Journey.class,
-                                                    "my journey", "test");
-
-        journey.addStep((Step) model.construct(Step.class, "my first step",
-                                               "my first step"));
-        em.flush();
-
-        assertEquals(1, journey.getSteps().size());
-        em.getTransaction().rollback();
-
-    }
+    boolean onComplete();
 
 }

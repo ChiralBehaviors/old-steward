@@ -6,7 +6,19 @@ imports {
     "urn:uuid:00000000-0000-0004-0000-000000000003" as kernel
 }
 
+attributes {
+    experience = "Experience" "Experience" numeric;
+}
+
 intervals {
-    journey = "Journey" "A journey";
-    step = "Step" "A step";
+    Journey = "Journey" "A journey";
+    Step = "Step" "A step";
+    
+    edges {
+        Journey.kernel::HasMember.Step
+    }
+    facets {
+        kernel::IsA.Journey { experience } 
+        kernel::IsA.Step { experience } 
+    }
 }
