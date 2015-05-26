@@ -15,29 +15,12 @@
  */
 package com.chiralbehaviors.steward.timer;
 
-import com.chiralbehaviors.steward.workspace.Journey;
-
 /**
  * @author hparry
  *
  */
-public interface Timer {
-
-    void start();
-
-    void stop();
-
-    void reset();
-
-    /**
-     * @param journey
-     */
-    void setJourney(Journey journey);
+public interface CompletionAction {
     
-    Journey getJourney();
-    
-    boolean completed();
-    
-    void addStep();
+    boolean onComplete();
 
 }

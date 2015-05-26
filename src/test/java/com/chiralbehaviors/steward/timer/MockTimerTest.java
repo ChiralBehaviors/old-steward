@@ -15,38 +15,42 @@
  */
 package com.chiralbehaviors.steward.timer;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import com.chiralbehaviors.steward.workspace.AbstractStewardTest;
-import com.chiralbehaviors.steward.workspace.Journey;
-import com.chiralbehaviors.steward.workspace.Step;
+import com.hellblazer.utils.Condition;
+import com.hellblazer.utils.Utils;
 
 /**
  * @author hparry
  *
  */
-public class MockTimerTest extends AbstractStewardTest {
-    
+public class MockTimerTest {
+
     @Test
     public void testTimer() throws Exception {
-        Timer timer = mock(Timer.class);
-        
-        Journey journey = (Journey) model.construct(Journey.class, "two step", null);
-        timer.setJourney(journey);
-        
-        when(timer.completed()).thenReturn(true);
-        if (timer.completed()) {
-            timer.addStep();
-            journey.addStep((Step) model.construct(Step.class, "step 1", null));
-        }
-        
-        assertEquals(1, journey.getSteps().size());
-        
-        
+
+        int time = 1;
+        CountdownTimer timer = new CountdownTimer(time, new CompletionAction() {
+
+            @Override
+            public boolean onComplete() {
+                System.out.println("completed");
+                return true;
+            }
+        });
+        assertFalse(timer.isCompleted());
+        timer.start();
+
+        assertTrue(Utils.waitForCondition(3000, new Condition() {
+
+            @Override
+            public boolean isTrue() {
+                return timer.isCompleted();
+            }
+        }));
+
     }
 
 }
