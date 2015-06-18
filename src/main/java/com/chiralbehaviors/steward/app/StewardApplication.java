@@ -15,14 +15,27 @@
  */
 package com.chiralbehaviors.steward.app;
 
+import static org.junit.Assert.assertNotNull;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Environment;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+import com.chiralbehaviors.CoRE.WellKnownObject;
+import com.chiralbehaviors.CoRE.meta.Model;
+import com.chiralbehaviors.CoRE.meta.models.ModelImpl;
 
 /**
  * @author hparry
  *
  */
-public class StewardApplication extends Application<StewardConfiguration>{
+public class StewardApplication extends Application<StewardConfiguration> {
+    private EntityManagerFactory emf;
 
     /* (non-Javadoc)
      * @see io.dropwizard.Application#run(io.dropwizard.Configuration, io.dropwizard.setup.Environment)
@@ -30,8 +43,23 @@ public class StewardApplication extends Application<StewardConfiguration>{
     @Override
     public void run(StewardConfiguration configuration, Environment environment)
                                                                                 throws Exception {
-        // TODO Auto-generated method stub
+        emf = getEntityManagerFactory();
+        Model model = new ModelImpl(emf);
         
+
+    }
+
+    /**
+     * @return
+     * @throws IOException 
+     */
+    private EntityManagerFactory getEntityManagerFactory() throws IOException {
+        InputStream is = this.getClass().getResourceAsStream("/jpa.properties");
+        assertNotNull("jpa properties missing", is);
+        Properties properties = new Properties();
+        properties.load(is);
+        return Persistence.createEntityManagerFactory(WellKnownObject.CORE,
+                                                      properties);
     }
 
 }
