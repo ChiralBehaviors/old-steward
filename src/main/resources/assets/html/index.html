@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <title>Steward</title>
+        
+    </head>
+    <body >
+        <p>HELLO CLEVELAND!</p>
+        <div ng-app="StewardApp" ng-controller="stewardController">
+            <div>
+                <h1>AngularJS - Add Countdown Seconds Example</h1>
+                <h3><timer countdown="100" interval="1000">{{countdown}}</timer></h3>
+                <button ng-click="add5Seconds()">Add 5 Seconds</button>
+            </div>
+            <div id="journey"></div>
+        </div>
+        <script type="text/javascript" src="../js/bower_components/angular-timer/dist/assets/js/angular-timer-bower.js"></script>
+    <script type="text/javascript" src="../js/bower_components/angular-timer/dist/assets/js/angular-timer-all.min.js"></script>
+        <script src="../js/app.js"></script>
+        <script src="../js/controllers.js"></script>
+    </body>
+</html>

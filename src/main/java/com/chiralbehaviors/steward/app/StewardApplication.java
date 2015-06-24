@@ -17,6 +17,8 @@ package com.chiralbehaviors.steward.app;
 
 import static org.junit.Assert.assertNotNull;
 import io.dropwizard.Application;
+import io.dropwizard.assets.AssetsBundle;
+import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
 import java.io.IOException;
@@ -45,10 +47,17 @@ public class StewardApplication extends Application<StewardConfiguration> {
                                                                                 throws Exception {
         emf = getEntityManagerFactory();
         Model model = new ModelImpl(emf);
-        
+
+        environment.jersey().register(new JpaHealthCheck(emf));
 
     }
 
+    @Override
+    public void initialize(Bootstrap<StewardConfiguration> bootstrap) {
+        bootstrap.addBundle(new AssetsBundle("/assets/css", "/css", null, "css"));
+        bootstrap.addBundle(new AssetsBundle("/assets/js", "/js", null, "js"));
+        bootstrap.addBundle(new AssetsBundle("/assets/html", "/html", null, "html"));
+    }
     /**
      * @return
      * @throws IOException 
