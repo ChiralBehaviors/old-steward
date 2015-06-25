@@ -1,0 +1,1 @@
+angular.module("StewardApp.controllers",[]).controller("stewardController",function(o){o.add5Seconds=function(){o.$broadcast("timer-add-cd-seconds",5)}});

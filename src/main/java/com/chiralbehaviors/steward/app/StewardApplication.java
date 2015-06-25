@@ -48,7 +48,7 @@ public class StewardApplication extends Application<StewardConfiguration> {
         emf = getEntityManagerFactory();
         Model model = new ModelImpl(emf);
 
-        environment.jersey().register(new JpaHealthCheck(emf));
+        
 
     }
 
