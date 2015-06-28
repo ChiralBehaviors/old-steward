@@ -1,25 +1,36 @@
 <html>
-    <head>
-        <title>Steward</title>
-        
-    </head>
-    <body >
-        <p>HELLO CLEVELAND!</p>
-        <div ng-app="StewardApp" ng-controller="stewardController">
-            <div>
-                <h1>AngularJS - Add Countdown Seconds Example</h1>
-                <h3><timer countdown="100" interval="1000">{{countdown}}</timer></h3>
-                <button ng-click="add5Seconds()">Add 5 Seconds</button>
-            </div>
-            <div id="journey"></div>
+
+<head>
+    <title>Steward</title>
+
+</head>
+
+<body>
+    <p>HELLO CLEVELAND!</p>
+    <div ng-app="StewardApp" ng-controller="stewardController">
+        <div>
+            <h1>AngularJS - Add Countdown Seconds Example</h1>
+            <h3>
+                <label>
+                    Timer length (seconds):
+<input type="number" name="timerLength" ng-model="timerLength"/>
+</label>
+            <timer countdown="timerLength" autostart="false" interval="1000">{{minutes}}:{{sseconds}}</timer></h3>
+            <button ng-click="startTimer()" ng-disabled="timerRunning">Start</button>
+            <button ng-click="stopTimer()" ng-disabled="!timerRunning">Stop</button>
+            <button ng-click="resetTimer()">Reset</button>
         </div>
-        
-        <script type="text/javascript" src="../js/bower_components/momentjs/moment.js"></script>
-        <script type="text/javascript" src="../js/bower_components/momentjs/min/locales.js"></script>
-        <script type="text/javascript" src="../js/bower_components/humanize-duration/humanize-duration.js"></script>
-        <script type="text/javascript" src="../js/bower_components/angular/angular.js"></script>
+        <div id="journey"></div>
+    </div>
+
+
+    <script type="text/javascript" src="../js/bower_components/momentjs/moment.js"></script>
+    <script type="text/javascript" src="../js/bower_components/momentjs/min/locales.js"></script>
+    <script type="text/javascript" src="../js/bower_components/humanize-duration/humanize-duration.js"></script>
+    <script type="text/javascript" src="../js/bower_components/angular/angular.js"></script>
     <script type="text/javascript" src="../js/bower_components/angular-timer/dist/angular-timer.js"></script>
-        <script src="../js/app.js"></script>
-        <script src="../js/controllers.js"></script>
-    </body>
+    <script src="../js/app.js"></script>
+    <script src="../js/controllers.js"></script>
+</body>
+
 </html>
