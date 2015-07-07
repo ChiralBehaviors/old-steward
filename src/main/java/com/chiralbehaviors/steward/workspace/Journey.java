@@ -29,7 +29,7 @@ import com.chiralbehaviors.CoRE.time.Interval;
  */
 @State(workspace = "uri:http://ultrastructure.me/ontology/com.chiralbehaviors/demo/steward-workspace/v1")
 public interface Journey extends ScopedPhantasm<Interval> {
-
+    
     @Edge(@Key(namespace = "kernel", name = "HasMember"))
     List<Step> getSteps();
 

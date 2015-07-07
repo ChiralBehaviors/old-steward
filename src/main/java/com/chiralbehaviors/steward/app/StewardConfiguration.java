@@ -17,10 +17,23 @@ package com.chiralbehaviors.steward.app;
 
 import io.dropwizard.Configuration;
 
+import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * @author hparry
  *
  */
 public class StewardConfiguration extends Configuration {
+
+    public String            name;
+    @NotNull
+    @JsonProperty
+    private JpaConfiguration jpa = new JpaConfiguration();
+
+    public JpaConfiguration getCrudServiceConfiguration() {
+        return jpa;
+    }
 
 }

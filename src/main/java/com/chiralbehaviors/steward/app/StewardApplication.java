@@ -17,7 +17,7 @@ package com.chiralbehaviors.steward.app;
 
 import static org.junit.Assert.assertNotNull;
 import io.dropwizard.Application;
-import io.dropwizard.assets.AssetsBundle;
+import io.dropwizard.servlets.assets.AssetServlet;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
@@ -27,10 +27,12 @@ import java.util.Properties;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.servlet.ServletRegistration.Dynamic;
 
 import com.chiralbehaviors.CoRE.WellKnownObject;
 import com.chiralbehaviors.CoRE.meta.Model;
 import com.chiralbehaviors.CoRE.meta.models.ModelImpl;
+import com.google.common.base.Charsets;
 
 /**
  * @author hparry
@@ -38,6 +40,10 @@ import com.chiralbehaviors.CoRE.meta.models.ModelImpl;
  */
 public class StewardApplication extends Application<StewardConfiguration> {
     private EntityManagerFactory emf;
+    
+    public static void main(String... args) throws Exception {
+        new StewardApplication().run(args);
+    }
 
     /* (non-Javadoc)
      * @see io.dropwizard.Application#run(io.dropwizard.Configuration, io.dropwizard.setup.Environment)
@@ -45,22 +51,27 @@ public class StewardApplication extends Application<StewardConfiguration> {
     @Override
     public void run(StewardConfiguration configuration, Environment environment)
                                                                                 throws Exception {
+        Dynamic dynamic = environment.admin().addServlet("assets",
+                                                         new AssetServlet(
+                                                                          "/assets",
+                                                                          "/assets/",
+                                                                          "html/index.html",
+                                                                          Charsets.UTF_8));
+        dynamic.addMapping("/assets/*");
+        dynamic.setInitParameter("useFileMappedBuffer", "false");
         emf = getEntityManagerFactory();
+        @SuppressWarnings("unused")
         Model model = new ModelImpl(emf);
-
-        
 
     }
 
     @Override
     public void initialize(Bootstrap<StewardConfiguration> bootstrap) {
-        bootstrap.addBundle(new AssetsBundle("/assets/css", "/css", null, "css"));
-        bootstrap.addBundle(new AssetsBundle("/assets/js", "/js", null, "js"));
-        bootstrap.addBundle(new AssetsBundle("/assets/html", "/html", null, "html"));
     }
+
     /**
      * @return
-     * @throws IOException 
+     * @throws IOException
      */
     private EntityManagerFactory getEntityManagerFactory() throws IOException {
         InputStream is = this.getClass().getResourceAsStream("/jpa.properties");
