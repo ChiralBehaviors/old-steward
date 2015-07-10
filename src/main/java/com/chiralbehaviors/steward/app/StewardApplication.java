@@ -25,11 +25,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.servlet.ServletRegistration.Dynamic;
 
 import com.chiralbehaviors.CoRE.WellKnownObject;
+import com.chiralbehaviors.CoRE.agency.Agency;
 import com.chiralbehaviors.CoRE.meta.Model;
 import com.chiralbehaviors.CoRE.meta.models.ModelImpl;
 import com.google.common.base.Charsets;
@@ -39,8 +41,10 @@ import com.google.common.base.Charsets;
  *
  */
 public class StewardApplication extends Application<StewardConfiguration> {
-    private EntityManagerFactory emf;
     
+    public static final String STEWARD_WORKSPACE_URI ="uri:http://ultrastructure.me/ontology/com.chiralbehaviors/demo/steward-workspace/v1";
+    private EntityManagerFactory emf;
+
     public static void main(String... args) throws Exception {
         new StewardApplication().run(args);
     }
@@ -60,8 +64,15 @@ public class StewardApplication extends Application<StewardConfiguration> {
         dynamic.addMapping("/assets/*");
         dynamic.setInitParameter("useFileMappedBuffer", "false");
         emf = getEntityManagerFactory();
-        @SuppressWarnings("unused")
         Model model = new ModelImpl(emf);
+        EntityManager em = model.getEntityManager();
+        if (model.find("Core User", Agency.class) == null) {
+            com.chiralbehaviors.CoRE.kernel.Bootstrap bootstrap = new com.chiralbehaviors.CoRE.kernel.Bootstrap(
+                                                                                                                em);
+            em.getTransaction().begin();
+            bootstrap.bootstrap();
+            em.getTransaction().commit();
+        }
 
     }
 

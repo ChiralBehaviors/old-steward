@@ -16,6 +16,8 @@
 package com.chiralbehaviors.steward.rest;
 
 import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.GET;
@@ -24,9 +26,11 @@ import javax.ws.rs.PathParam;
 
 import com.chiralbehaviors.CoRE.meta.Model;
 import com.chiralbehaviors.CoRE.meta.models.ModelImpl;
-import com.chiralbehaviors.CoRE.product.Product;
-import com.chiralbehaviors.CoRE.workspace.WorkspaceAuthorization;
+import com.chiralbehaviors.CoRE.meta.workspace.Workspace;
+import com.chiralbehaviors.CoRE.time.Interval;
+import com.chiralbehaviors.steward.app.StewardApplication;
 import com.chiralbehaviors.steward.workspace.Journey;
+import com.chiralbehaviors.steward.workspace.StewardWorkspace;
 
 /**
  * @author hparry
@@ -34,8 +38,9 @@ import com.chiralbehaviors.steward.workspace.Journey;
  */
 @Path("/steward")
 public class StewardResource {
-    
+
     private final EntityManagerFactory emf;
+
     /**
      * @param emf
      */
@@ -43,23 +48,20 @@ public class StewardResource {
         this.emf = emf;
     }
 
-    private static final String STEWARD_WORKSPACE_NAME = "Steward";
-    
-    @SuppressWarnings("unused")
     @GET
     @Path("/steward/journey")
     public List<Journey> getJournies() {
         Model model = new ModelImpl(emf);
-        Product stewardWorkspace = model.find(STEWARD_WORKSPACE_NAME, Product.class);
-        List<WorkspaceAuthorization> ws = model.getWorkspaceModel().getWorkspace(stewardWorkspace);
-        List<Product> jps = model.getProductModel().getChildren(null, null);
-        return null;
+        StewardWorkspace ws = (StewardWorkspace) model.getWorkspaceModel().getScoped(Workspace.uuidOf(StewardApplication.STEWARD_WORKSPACE_URI)).getWorkspace().getAccessor(StewardWorkspace.class);
+        List<Interval> jps = model.getIntervalModel().getChildren(ws.getJourney().getRuleform(), model.getKernel().getIsA().getInverse());
+        List<Journey> journies = jps.stream().map(journey -> (Journey) model.wrap(Journey.class, journey)).collect(Collectors.toList());
+        return journies;
     }
-    
+
     @GET
     @Path("/steward/journey/{id}/")
-    public Journey getJourney(@PathParam("id") String id){
-        return null;
+    public Journey getJourney(@PathParam("id") UUID id) {
+        return (Journey) new ModelImpl(emf).lookup(Journey.class, id);
     }
 
 }

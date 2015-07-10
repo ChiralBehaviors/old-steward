@@ -15,23 +15,15 @@
  */
 package com.chiralbehaviors.steward.workspace;
 
-import org.junit.BeforeClass;
-
-import com.chiralbehaviors.CoRE.meta.models.AbstractModelTest;
-import com.chiralbehaviors.CoRE.workspace.dsl.WorkspaceImporter;
+import com.chiralbehaviors.CoRE.time.Interval;
 
 /**
  * @author hparry
  *
  */
-public abstract class AbstractStewardTest extends AbstractModelTest {
+public interface StewardWorkspace {
 
-    @BeforeClass
-    public static void before() throws Exception {
-        em.getTransaction().begin();
-        WorkspaceImporter.createWorkspace(AbstractStewardTest.class.getResourceAsStream("/steward-workspace.wsp"),
-                                          model);
-        em.getTransaction().commit();
-    }
+    Interval getJourney();
 
+    Interval getStep();
 }

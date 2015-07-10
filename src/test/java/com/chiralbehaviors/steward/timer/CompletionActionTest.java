@@ -33,6 +33,7 @@ public class CompletionActionTest extends AbstractStewardTest {
 
     @Test
     public void testStepInsert() throws Exception {
+        em.getTransaction().begin();
         Journey journey = (Journey) model.construct(Journey.class,
                                                     "my journey", null);
         CountdownTimer timer = new CountdownTimer(
@@ -42,7 +43,7 @@ public class CompletionActionTest extends AbstractStewardTest {
                                                                               model));
         timer.start();
         assertTrue(Utils.waitForCondition(3000, () -> timer.isCompleted()));
-        em.flush();
+        em.getTransaction().commit();
         assertEquals(1, journey.getSteps().size());
     }
 

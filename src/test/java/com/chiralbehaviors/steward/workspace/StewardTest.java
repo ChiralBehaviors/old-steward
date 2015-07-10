@@ -19,6 +19,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import com.chiralbehaviors.steward.rest.StewardResource;
+
 /**
  * @author hparry
  *
@@ -29,15 +31,18 @@ public class StewardTest extends AbstractStewardTest {
 
     @Test
     public void testJourneys() throws InstantiationException {
+        em.getTransaction().begin();
         Journey journey = (Journey) model.construct(Journey.class,
                                                     "my journey", "test");
 
         journey.addStep((Step) model.construct(Step.class, "my first step",
                                                "my first step"));
-        em.flush();
+        em.getTransaction().commit();
 
         assertEquals(1, journey.getSteps().size());
-        em.getTransaction().rollback();
+        StewardResource resource = new StewardResource(emf);
+        assertEquals(1, resource.getJournies().size());
+        //em.getTransaction().rollback();
 
     }
 
