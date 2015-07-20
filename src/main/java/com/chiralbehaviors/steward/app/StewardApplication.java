@@ -41,8 +41,8 @@ import com.google.common.base.Charsets;
  *
  */
 public class StewardApplication extends Application<StewardConfiguration> {
-    
-    public static final String STEWARD_WORKSPACE_URI ="uri:http://ultrastructure.me/ontology/com.chiralbehaviors/demo/steward-workspace/v1";
+
+    public static final String   STEWARD_WORKSPACE_URI = "uri:http://ultrastructure.me/ontology/com.chiralbehaviors/demo/steward-workspace/v1";
     private EntityManagerFactory emf;
 
     public static void main(String... args) throws Exception {
@@ -53,22 +53,17 @@ public class StewardApplication extends Application<StewardConfiguration> {
      * @see io.dropwizard.Application#run(io.dropwizard.Configuration, io.dropwizard.setup.Environment)
      */
     @Override
-    public void run(StewardConfiguration configuration, Environment environment)
-                                                                                throws Exception {
-        Dynamic dynamic = environment.admin().addServlet("assets",
-                                                         new AssetServlet(
-                                                                          "/assets",
-                                                                          "/assets/",
-                                                                          "html/index.html",
-                                                                          Charsets.UTF_8));
+    public void run(StewardConfiguration configuration, Environment environment) throws Exception {
+        Dynamic dynamic = environment.admin().addServlet("assets", new AssetServlet("/assets", "/assets/",
+                                                                                    "html/index.html", Charsets.UTF_8));
         dynamic.addMapping("/assets/*");
         dynamic.setInitParameter("useFileMappedBuffer", "false");
         emf = getEntityManagerFactory();
         Model model = new ModelImpl(emf);
         EntityManager em = model.getEntityManager();
         if (model.find("Core User", Agency.class) == null) {
-            com.chiralbehaviors.CoRE.kernel.Bootstrap bootstrap = new com.chiralbehaviors.CoRE.kernel.Bootstrap(
-                                                                                                                em);
+            com.chiralbehaviors.CoRE.kernel.Bootstrap bootstrap = new com.chiralbehaviors.CoRE.kernel.Bootstrap(em,
+                                                                                                                null);
             em.getTransaction().begin();
             bootstrap.bootstrap();
             em.getTransaction().commit();
@@ -89,8 +84,7 @@ public class StewardApplication extends Application<StewardConfiguration> {
         assertNotNull("jpa properties missing", is);
         Properties properties = new Properties();
         properties.load(is);
-        return Persistence.createEntityManagerFactory(WellKnownObject.CORE,
-                                                      properties);
+        return Persistence.createEntityManagerFactory(WellKnownObject.CORE, properties);
     }
 
 }

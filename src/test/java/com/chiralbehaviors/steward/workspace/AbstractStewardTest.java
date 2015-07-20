@@ -18,13 +18,15 @@ package com.chiralbehaviors.steward.workspace;
 import org.junit.BeforeClass;
 
 import com.chiralbehaviors.CoRE.meta.models.AbstractModelTest;
-import com.chiralbehaviors.CoRE.workspace.dsl.WorkspaceImporter;
+import com.chiralbehaviors.CoRE.meta.workspace.dsl.WorkspaceImporter;
 
 /**
  * @author hparry
  *
  */
 public abstract class AbstractStewardTest extends AbstractModelTest {
+    
+    private boolean workspaceImported = false;
 
     @BeforeClass
     public static void before() throws Exception {
