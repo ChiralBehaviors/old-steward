@@ -25,8 +25,6 @@ import com.chiralbehaviors.CoRE.meta.workspace.dsl.WorkspaceImporter;
  *
  */
 public abstract class AbstractStewardTest extends AbstractModelTest {
-    
-    private boolean workspaceImported = false;
 
     @BeforeClass
     public static void before() throws Exception {
